@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BarCampEVN</string>
+    <string name="live_streaming">Live Streaming</string>
+    <string name="attend">Attend</string>
+    <string name="attend_message">Notify me when this talk starts</string>
+    <string name="notification_title">%1$s talk at %2$s</string>
+    <string name="notification_description">%s will start in 10 minutes. Hurry!</string>
+</resources>
