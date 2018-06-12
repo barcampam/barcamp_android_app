@@ -11,36 +11,6 @@ import java.util.Date;
 
 public final class TimeHelper {
 
-    public static String hourDate(String date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        Date newDate = null;
-        try {
-            newDate = format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        format = new SimpleDateFormat("HH:mm");
-         date = format.format(newDate);
-
-        return date;
-    }
-
-    public static int day(String date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        Date newDate = null;
-        try {
-            newDate = format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        format = new SimpleDateFormat("dd");
-        String day = format.format(newDate);
-
-        return Integer.valueOf(day);
-    }
-
     public static Date dateFromHour(String hour) {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         Date date = null;

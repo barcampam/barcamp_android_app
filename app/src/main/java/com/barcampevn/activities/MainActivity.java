@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    private static final int FIRST_DAY = 27;
-    private static final int SECOND_DAY = 28;
-    private static final String[] ROOMS = {"Big Hall", "213W", "214W", "208E", "308E"};
+    private static final int FIRST_DAY = 16;
+    private static final int SECOND_DAY = 17;
+    private static final String[] ROOMS = {"Big Hall", "213W", "214W", "208E", "308E", "113W", "114W"};
     private static final String[] TIMES = {"10:00", "10:30", "11:00", "11:30", "12:00",  "12:30", "13:00",  "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00"};
 
     private SparseArray<List<Schedule>> mArray;
@@ -107,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
         int day;
         if (img.getTag() == null || (int)img.getTag() == FIRST_DAY) {
             mFirstDay.setImageResource(android.R.color.transparent);
-            mSecondDay.setImageResource(R.drawable.ic_magenda_28);
+            mSecondDay.setImageResource(R.drawable.ic_magenda_17);
 
             day = SECOND_DAY;
         } else {
-            mFirstDay.setImageResource(R.drawable.ic_magenda_27);
+            mFirstDay.setImageResource(R.drawable.ic_magenda_16);
             mSecondDay.setImageResource(android.R.color.transparent);
 
             day = FIRST_DAY;
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         for (int x = 0; x < ROOMS.length; x++) {
             String room = ROOMS[x];
             int resID = getResources().getIdentifier("room" + (x + 1), "id", getPackageName());
-            TextView roomTextView = (TextView) findViewById(resID);
+            TextView roomTextView = findViewById(resID);
             roomTextView.setText(room);
         }
 
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         APIHelper.getService().getSchedules().enqueue(new Callback<List<Schedule>>() {
             @Override
             public void onResponse(@NonNull Call<List<Schedule>> call, @NonNull Response<List<Schedule>> response) {
-                parseData(response.body());
+                handleResponse(response);
                 mProgress.setVisibility(GONE);
             }
 
@@ -170,9 +170,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void parseData(List<Schedule> schedules) {
-        List<Schedule> firstDaySchedules = Flowable.fromIterable(schedules).filter(schedule -> TimeHelper.day(schedule.getTimeFrom().getDate()) == FIRST_DAY).toList().blockingGet();
-        List<Schedule> secondDaySchedules = Flowable.fromIterable(schedules).filter(schedule -> TimeHelper.day(schedule.getTimeFrom().getDate()) == SECOND_DAY).toList().blockingGet();
+    private void parseData(@NonNull List<Schedule> schedules) {
+        List<Schedule> firstDaySchedules = Flowable.fromIterable(schedules).filter(schedule -> schedule.getTimeFrom().getDay() == FIRST_DAY).toList().blockingGet();
+        List<Schedule> secondDaySchedules = Flowable.fromIterable(schedules).filter(schedule -> schedule.getTimeFrom().getDay() == SECOND_DAY).toList().blockingGet();
 
         firstDaySchedules = sortSchedules(firstDaySchedules);
         secondDaySchedules = sortSchedules(secondDaySchedules);
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             updateView(firstDaySchedules);
         } else {
             mFirstDay.setImageResource(android.R.color.transparent);
-            mSecondDay.setImageResource(R.drawable.ic_magenda_28);
+            mSecondDay.setImageResource(R.drawable.ic_magenda_17);
             mDays.setTag(SECOND_DAY);
 
             updateView(secondDaySchedules);
@@ -210,8 +210,8 @@ public class MainActivity extends AppCompatActivity {
                 for (Schedule schedule1 : schedules) {
                     if (schedule1.getRoom().equalsIgnoreCase(room)) {
                         Date header = TimeHelper.dateFromHour(time);
-                        Date start = TimeHelper.dateFromHour(TimeHelper.hourDate(schedule1.getTimeFrom().getDate()));
-                        Date end = TimeHelper.dateFromHour(TimeHelper.hourDate(schedule1.getTimeTo().getDate()));
+                        Date start = TimeHelper.dateFromHour(schedule1.getTimeFrom().getHourDate());
+                        Date end = TimeHelper.dateFromHour(schedule1.getTimeTo().getHourDate());
 
                         if (TimeHelper.isEqual(start, header)) {
                             defaultSchedule = schedule1;
@@ -250,5 +250,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return position * 6;
+    }
+
+    private void handleResponse(Response<List<Schedule>> response) {
+        if (response.isSuccessful()) {
+            List<Schedule> list = response.body();
+            if (list != null && !list.isEmpty()) {
+                parseData(list);
+            }
+        } else {
+            UIHelper.showSnackBar(mRecyclerView, response.message());
+        }
     }
 }

@@ -17,6 +17,7 @@ import com.barcampevn.data.models.Schedule;
 
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static android.os.Build.VERSION_CODES.M;
+import static com.barcampevn.helpers.NotificationPublisher.NOTIFICATION_CHANNEL_ID;
 
 /**
  * Created by andranikas on 5/17/2017.
@@ -34,7 +35,7 @@ public final class UIHelper {
 
     public static void scheduleNotification(Context context, Schedule schedule, long triggerAtMillis) {
         final int NOTIFY_ID = 121;
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.notification_title, schedule.getEnSpeaker().getSpeaker(), schedule.getRoom()))
                 .setContentText(context.getString(R.string.notification_description, schedule.getEnSpeaker().getTopic()))
                 .setAutoCancel(true)

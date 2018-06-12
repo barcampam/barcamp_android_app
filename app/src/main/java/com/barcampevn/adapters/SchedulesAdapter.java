@@ -1,5 +1,6 @@
 package com.barcampevn.adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,21 +36,20 @@ public class SchedulesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         mListener = listener;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_HEADER) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.schedule_header_row, parent, false);
             return new HeaderViewHolder(v);
-        } else if (viewType == TYPE_ITEM) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.schedule_item_row, parent, false);
-            return new ItemViewHolder(v);
         }
 
-        return null;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.schedule_item_row, parent, false);
+        return new ItemViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Schedule schedule = getItem(position);
         if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
@@ -64,7 +64,7 @@ public class SchedulesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 itemViewHolder.itemView.setOnClickListener(null);
             } else {
-                itemViewHolder.mTime.setText(TimeHelper.hourDate(schedule.getTimeFrom().getDate()) + "-" + TimeHelper.hourDate(schedule.getTimeTo().getDate()));
+                itemViewHolder.mTime.setText(schedule.getTimeFrom().getHourDate() + "-" + schedule.getTimeTo().getHourDate());
                 itemViewHolder.mSpeaker.setText(schedule.getEnSpeaker().getSpeaker());
                 itemViewHolder.mTopic.setText(schedule.getEnSpeaker().getTopic());
                 itemViewHolder.mContainer.setBackground(itemViewHolder.itemView.getContext().getResources().getDrawable(R.drawable.rounded_corners_bg));

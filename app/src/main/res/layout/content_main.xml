@@ -23,7 +23,7 @@
             <TextView
                 android:id="@+id/room0"
                 android:layout_width="match_parent"
-                app:layout_heightPercent="16.6%" />
+                app:layout_heightPercent="11%" />
 
             <TextView
                 android:id="@+id/room1"
@@ -33,7 +33,7 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_heightPercent="16.6%" />
+                app:layout_heightPercent="13%" />
 
             <TextView
                 android:id="@+id/room2"
@@ -43,7 +43,7 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_heightPercent="16.6%" />
+                app:layout_heightPercent="13%" />
 
             <TextView
                 android:id="@+id/room3"
@@ -53,7 +53,7 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_heightPercent="16.6%" />
+                app:layout_heightPercent="13%" />
 
             <TextView
                 android:id="@+id/room4"
@@ -63,7 +63,7 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_heightPercent="16.6%" />
+                app:layout_heightPercent="13%" />
 
             <TextView
                 android:id="@+id/room5"
@@ -73,17 +73,27 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_heightPercent="16.6%" />
+                app:layout_heightPercent="12%" />
 
             <TextView
                 android:id="@+id/room6"
                 android:layout_width="match_parent"
-                android:layout_below="@id/room4"
+                android:layout_below="@id/room5"
                 android:gravity="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_heightPercent="16.6%" />
+                app:layout_heightPercent="12%" />
+
+            <TextView
+                android:id="@+id/room7"
+                android:layout_width="match_parent"
+                android:layout_below="@id/room6"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_heightPercent="12%" />
 
         </android.support.percent.PercentRelativeLayout>
 
@@ -105,7 +115,8 @@
         android:background="@drawable/rounded_corners_days_bg"
         android:clickable="true"
         android:elevation="10dp"
-        app:layout_behavior="com.barcampevn.helpers.MoveUpBehavior">
+        app:layout_behavior="com.barcampevn.helpers.MoveUpBehavior"
+        tools:ignore="KeyboardInaccessibleWidget">
 
         <ImageView
             android:id="@+id/days_cover"
@@ -120,7 +131,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:clickable="true"
-            app:srcCompat="@drawable/ic_magenda_27" />
+            app:srcCompat="@drawable/ic_magenda_16"
+            tools:ignore="KeyboardInaccessibleWidget" />
 
         <ImageView
             android:id="@+id/second_day"
@@ -128,7 +140,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:clickable="true"
-            app:srcCompat="@drawable/ic_magenda_28" />
+            app:srcCompat="@drawable/ic_magenda_17"
+            tools:ignore="KeyboardInaccessibleWidget" />
 
     </FrameLayout>
 
