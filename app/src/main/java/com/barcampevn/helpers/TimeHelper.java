@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by andranikas on 5/19/2017.
@@ -12,7 +13,7 @@ import java.util.Date;
 public final class TimeHelper {
 
     public static Date dateFromHour(String hour) {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
         Date date = null;
         try {
             date = format.parse(hour);
@@ -24,7 +25,7 @@ public final class TimeHelper {
     }
 
     public static Date date(String date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
         Date dt = null;
         try {
             dt = format.parse(date);
@@ -36,7 +37,7 @@ public final class TimeHelper {
     }
 
     public static Date currentDate() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
         String formattedDate = df.format(Calendar.getInstance().getTime());
 
         Date currentDate = null;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ic_logo" type="drawable">@drawable/ic_barcamp_2019_logo</item>
+    <item name="ic_splash_element_1" type="drawable">@drawable/ic_pixel_top</item>
+    <item name="ic_splash_element_2" type="drawable">@drawable/ic_pixel_bottom</item>
+    <item name="ic_splash_element_3" type="drawable">@drawable/ic_pixel_left</item>
+    <item name="ic_splash_element_4" type="drawable">@drawable/ic_pixel_center</item>
+    <item name="ic_notification" type="drawable">@drawable/ic_notification_24dp</item>
+    <item name="ic_first_day" type="drawable">@drawable/ic_22</item>
+    <item name="ic_second_day" type="drawable">@drawable/ic_23</item>
+</resources>

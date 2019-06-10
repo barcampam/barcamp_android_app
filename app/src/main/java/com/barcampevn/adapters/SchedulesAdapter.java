@@ -1,13 +1,14 @@
 package com.barcampevn.adapters;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.barcampevn.R;
 import com.barcampevn.data.models.Schedule;
@@ -31,7 +32,7 @@ public class SchedulesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<Schedule> mDataSource;
     private OnClickListener mListener;
 
-    public SchedulesAdapter(OnClickListener listener) {
+    public SchedulesAdapter(@NonNull OnClickListener listener) {
         mDataSource = Collections.emptyList();
         mListener = listener;
     }
@@ -64,7 +65,7 @@ public class SchedulesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 itemViewHolder.itemView.setOnClickListener(null);
             } else {
-                itemViewHolder.mTime.setText(schedule.getTimeFrom().getHourDate() + "-" + schedule.getTimeTo().getHourDate());
+                itemViewHolder.mTime.setText(String.format("%s-%s", schedule.getTimeFrom().getHourDate(), schedule.getTimeTo().getHourDate()));
                 itemViewHolder.mSpeaker.setText(schedule.getEnSpeaker().getSpeaker());
                 itemViewHolder.mTopic.setText(schedule.getEnSpeaker().getTopic());
                 itemViewHolder.mContainer.setBackground(itemViewHolder.itemView.getContext().getResources().getDrawable(R.drawable.rounded_corners_bg));

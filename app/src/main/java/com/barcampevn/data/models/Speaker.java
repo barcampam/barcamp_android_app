@@ -5,8 +5,8 @@ package com.barcampevn.data.models;
  */
 
 public class Speaker {
-    String speaker;
-    String topic;
+    private String speaker;
+    private String topic;
 
     public String getSpeaker() {
         return speaker;

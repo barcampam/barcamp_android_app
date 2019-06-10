@@ -1,14 +1,6 @@
 package com.barcampevn.activities;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +9,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.barcampevn.R;
 import com.barcampevn.adapters.SchedulesAdapter;
@@ -40,7 +40,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Intent.ACTION_VIEW;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -54,19 +53,20 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    private static final int FIRST_DAY = 16;
-    private static final int SECOND_DAY = 17;
+    private static final int FIRST_DAY = 22;
+    private static final int SECOND_DAY = 23;
     private static final String[] ROOMS = {"Big Hall", "213W", "214W", "208E", "308E", "113W", "114W"};
     private static final String[] TIMES = {"10:00", "10:30", "11:00", "11:30", "12:00",  "12:30", "13:00",  "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00"};
+    private static final String CHANNEL_URL = "https://www.youtube.com/channel/UCz4Gaw-vexemY-WtB2NJu6w";
 
     private SparseArray<List<Schedule>> mArray;
     private SchedulesAdapter mAdapter;
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
-    @BindView(R.id.first_day) ImageView mFirstDay;
-    @BindView(R.id.second_day) ImageView mSecondDay;
-    @BindView(R.id.days_cover) ImageView mDays;
+    @BindView(R.id.first_day) AppCompatImageView mFirstDay;
+    @BindView(R.id.second_day) AppCompatImageView mSecondDay;
+    @BindView(R.id.days_cover) AppCompatImageView mDays;
     @BindView(R.id.days_container) FrameLayout mDaysContainer;
     @BindView(R.id.progress) ProgressBar mProgress;
 
@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
         Schedule schedule = mAdapter.getItem((int) view.getTag());
         long delay = TimeHelper.delay(schedule.getTimeFrom().getDate());
         if (!schedule.isDefault() && delay > 0)
-            UIHelper.showSnackBar(mDaysContainer, R.string.attend_message, R.string.attend, view1 -> UIHelper.scheduleNotification(getBaseContext(), schedule, TimeHelper.triggerAtMillis(delay)));
+            UIHelper.showSnackBar(mDaysContainer, R.string.attend_message, R.string.attend, view1 ->
+                    UIHelper.scheduleNotification(getBaseContext(), schedule, TimeHelper.triggerAtMillis(delay)));
     };
 
     @Override
@@ -94,9 +95,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_stream) {
-            Intent browserIntent = new Intent(ACTION_VIEW, Uri.parse("https://www.youtube.com/channel/UCz4Gaw-vexemY-WtB2NJu6w"));
-            startActivity(browserIntent);
-
+            UIHelper.openBrowser(this, CHANNEL_URL);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -107,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
         int day;
         if (img.getTag() == null || (int)img.getTag() == FIRST_DAY) {
             mFirstDay.setImageResource(android.R.color.transparent);
-            mSecondDay.setImageResource(R.drawable.ic_magenda_17);
+            mSecondDay.setImageResource(R.drawable.ic_second_day);
 
             day = SECOND_DAY;
         } else {
-            mFirstDay.setImageResource(R.drawable.ic_magenda_16);
+            mFirstDay.setImageResource(R.drawable.ic_first_day);
             mSecondDay.setImageResource(android.R.color.transparent);
 
             day = FIRST_DAY;
@@ -182,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             updateView(firstDaySchedules);
         } else {
             mFirstDay.setImageResource(android.R.color.transparent);
-            mSecondDay.setImageResource(R.drawable.ic_magenda_17);
+            mSecondDay.setImageResource(R.drawable.ic_second_day);
             mDays.setTag(SECOND_DAY);
 
             updateView(secondDaySchedules);

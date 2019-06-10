@@ -1,12 +1,14 @@
 package com.barcampevn.helpers;
 
 import android.content.Context;
-import android.support.annotation.Keep;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Created by aasilbekyan on 5/23/17.
@@ -24,20 +26,20 @@ public class MoveUpBehavior extends CoordinatorLayout.Behavior<View> {
     }
 
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
+    public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
         return dependency instanceof Snackbar.SnackbarLayout;
     }
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
-        float translationY = Math.min(0, ViewCompat.getTranslationY(dependency) - dependency.getHeight());
-        ViewCompat.setTranslationY(child, translationY);
+    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
+        float translationY = Math.min(0, dependency.getTranslationY() - dependency.getHeight());
+        child.setTranslationY(translationY);
         return true;
     }
 
     @Override
-    public void onDependentViewRemoved(CoordinatorLayout parent, View child, View dependency) {
+    public void onDependentViewRemoved(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
         super.onDependentViewRemoved(parent, child, dependency);
-        ViewCompat.setTranslationY(child, 0);
+        child.setTranslationY(0);
     }
 }

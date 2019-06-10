@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class APIHelper {
 
-    private static final String BASE_URL = "http://api.barcamp.am/";
+    private static final String BASE_URL = "https://api.barcamp.am/";
 
     private APIHelper() {
     }

@@ -5,16 +5,20 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationCompat;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.core.app.NotificationCompat;
 
 import com.barcampevn.R;
 import com.barcampevn.activities.MainActivity;
 import com.barcampevn.data.models.Schedule;
+import com.google.android.material.snackbar.Snackbar;
 
+import static android.content.Intent.ACTION_VIEW;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static android.os.Build.VERSION_CODES.M;
 import static com.barcampevn.helpers.NotificationPublisher.NOTIFICATION_CHANNEL_ID;
@@ -25,22 +29,22 @@ import static com.barcampevn.helpers.NotificationPublisher.NOTIFICATION_CHANNEL_
 
 public final class UIHelper {
 
-    public static void showSnackBar(View view, String message) {
+    public static void showSnackBar(@NonNull View view, @NonNull String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
 
-    public static void showSnackBar(View view, @StringRes int resId, @StringRes int actionResId, View.OnClickListener listener) {
+    public static void showSnackBar(@NonNull View view, @StringRes int resId, @StringRes int actionResId, @NonNull View.OnClickListener listener) {
         Snackbar.make(view, resId, Snackbar.LENGTH_LONG).setAction(actionResId, listener).show();
     }
 
-    public static void scheduleNotification(Context context, Schedule schedule, long triggerAtMillis) {
+    public static void scheduleNotification(@NonNull Context context, @NonNull Schedule schedule, long triggerAtMillis) {
         final int NOTIFY_ID = 121;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.notification_title, schedule.getEnSpeaker().getSpeaker(), schedule.getRoom()))
                 .setContentText(context.getString(R.string.notification_description, schedule.getEnSpeaker().getTopic()))
                 .setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_SOUND)
-                .setSmallIcon(R.drawable.ic_menu_notification);
+                .setSmallIcon(R.drawable.ic_notification);
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -65,5 +69,10 @@ public final class UIHelper {
         } else {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
         }
+    }
+
+    public static void openBrowser(@NonNull Context context, @NonNull String url) {
+        Intent browserIntent = new Intent(ACTION_VIEW, Uri.parse(url));
+        context.startActivity(browserIntent);
     }
 }

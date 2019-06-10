@@ -5,15 +5,16 @@ package com.barcampevn.data.models;
  */
 
 public class Schedule {
-    int id;
-    String room;
-    Time time_to;
-    Time time_from;
-    Speaker en;
-    Speaker hy;
-    String bg_image_url;
-    boolean isTime;
-    boolean isDefault;
+
+    private int id;
+    private String room;
+    private Time time_to;
+    private Time time_from;
+    private Speaker en;
+    private Speaker hy;
+    private String bg_image_url;
+    private boolean isTime;
+    private boolean isDefault;
 
     public String getRoom() {
         return room;

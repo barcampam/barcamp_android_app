@@ -9,10 +9,10 @@ import java.util.Date;
  */
 
 public class Time {
-    String date;
-    String timezone;
-    String timezone_type;
-    int day;
+    private String date;
+    private String timezone;
+    private String timezone_type;
+    private int day;
 
     public String getHourDate() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
